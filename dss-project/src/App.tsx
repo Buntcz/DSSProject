@@ -5,7 +5,7 @@ import { RightSide } from './components/rightSide/RightSide'
 import type { Todo } from './types/Todo'
 
 function App() {
-  const [todos,setTodos] = useState<Todo[]>()
+  const [todos,setTodos] = useState<Todo[]>([])
 
   async function fetchTodos() {
     try {
@@ -16,16 +16,17 @@ function App() {
     console.error("Error fetching data.")
   }
 }
+
   useEffect(() => {
     fetchTodos();
   }, []);
 
-  let completedTodos = todos.filter(todo => todo.completed == true)
-  let uncompletedTodos = todos.filter(todo => todo.completed == false)
+  const completedTodos = todos.filter(todo => todo.completed == true)
+  const uncompletedTodos = todos.filter(todo => todo.completed == false)
   
   return (<div className={styles.appContainer}>
-    <LeftSide todos={completedTodos} />
-    <RightSide todos={uncompletedTodos}/>
+    <LeftSide todoList={uncompletedTodos}/>
+    <RightSide todoList={completedTodos}/>
   </div>)
 }
 
