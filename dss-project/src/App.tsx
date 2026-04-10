@@ -21,12 +21,29 @@ function App() {
     fetchTodos();
   }, []);
 
-  const completedTodos = todos.filter(todo => todo.completed == true)
-  const uncompletedTodos = todos.filter(todo => todo.completed == false)
+  const toggleComplete = (todoId: number) => {
+    const flippedArray = todos.map((todo) => {
+      if (todo.id === todoId) {
+      const newTodo : Todo = {
+        id: todo.id,
+        userId: todo.userId,
+        title: todo.title,
+        completed: !todo.completed
+      }
+      return newTodo
+      } else {
+        return todo
+      }
+    })
+    setTodos(flippedArray)
+  }
+
+  const completedTodos : Todo[] = todos.filter(todo => todo.completed == true)
+  const uncompletedTodos : Todo[]  = todos.filter(todo => todo.completed == false)
   
   return (<div className={styles.appContainer}>
-    <LeftSide todoList={uncompletedTodos}/>
-    <RightSide todoList={completedTodos}/>
+    <LeftSide todoList={uncompletedTodos} toggleTodo={toggleComplete}/>
+    <RightSide todoList={completedTodos} toggleTodo={toggleComplete}/>
   </div>)
 }
 
