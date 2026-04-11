@@ -11,7 +11,9 @@ function App() {
     try {
     const response = await fetch("http://jsonplaceholder.typicode.com/todos")
     const data = await response.json()
-    setTodos(data)
+    const today = new Date().toISOString().slice(0,10)
+    const todosWithDate = data.map(todo => ({...todo, completedAt: todo.completed ? today : ""}))
+    setTodos(todosWithDate)
   } catch(error) {
     console.error("Error fetching data.")
   }
@@ -24,11 +26,14 @@ function App() {
   const toggleComplete = (todoId: number) => {
     const flippedArray = todos.map((todo) => {
       if (todo.id === todoId) {
+      const willBeComp = !todo.completed
+      const completedOn = willBeComp ? new Date().toISOString().slice(0,10) : ""
       const newTodo : Todo = {
         id: todo.id,
         userId: todo.userId,
         title: todo.title,
-        completed: !todo.completed
+        completed: !todo.completed,
+        completedAt: completedOn
       }
       return newTodo
       } else {
@@ -37,7 +42,6 @@ function App() {
     })
     setTodos(flippedArray)
   }
-
   const completedTodos : Todo[] = todos.filter(todo => todo.completed == true)
   const uncompletedTodos : Todo[]  = todos.filter(todo => todo.completed == false)
   
