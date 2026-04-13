@@ -3,10 +3,11 @@ import styles from './App.module.css'
 import { LeftSide } from './components/leftSide/LeftSide'
 import { RightSide } from './components/rightSide/RightSide'
 import type { Todo } from './types/Todo'
+import type { User } from './types/User'
 
 function App() {
   const [todos,setTodos] = useState<Todo[]>([])
-
+  const [users, setUsers] = useState<User[]>([])
   async function fetchTodos() {
     try {
     const response = await fetch("http://jsonplaceholder.typicode.com/todos")
@@ -19,8 +20,20 @@ function App() {
   }
 }
 
+async function fetchUsers() {
+  try {
+  const response = await fetch("http://jsonplaceholder.typicode.com/users")
+  const data = await response.json()
+  const usersToUse = data.map(user => ({id: user.id, username: user.username}))
+  setUsers(usersToUse)
+} catch(error) {
+  console.error("Error fetching users")
+} 
+} 
+
   useEffect(() => {
     fetchTodos();
+    fetchUsers();
   }, []);
 
   const toggleComplete = (todoId: number) => {
@@ -46,7 +59,7 @@ function App() {
   const uncompletedTodos : Todo[]  = todos.filter(todo => todo.completed == false)
   
   return (<div className={styles.appContainer}>
-    <LeftSide todoList={uncompletedTodos} toggleTodo={toggleComplete}/>
+    <LeftSide todoList={uncompletedTodos} toggleTodo={toggleComplete} userList={users}/>
     <RightSide todoList={completedTodos} toggleTodo={toggleComplete}/>
   </div>)
 }
