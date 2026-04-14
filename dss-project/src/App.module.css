@@ -1,39 +1,31 @@
-/* App.module.css
-   Theme direction: soft cards + blue/purple accent buttons
-   Goal: consistent spacing, nicer background, better panel styling, responsive layout
-*/
 
-/* If this is truly a CSS MODULE, "body" won't apply globally.
-   Put global styles like body background in index.css (recommended).
-   But keeping it here for reference. */
 body {
   margin: 0;
   padding: 0;
-  /* subtle background that matches your #5adaff -> #5468ff vibe */
   background: radial-gradient(1200px 600px at 10% 0%, rgba(90, 218, 255, 0.18), transparent 60%),
               radial-gradient(1000px 600px at 90% 20%, rgba(84, 104, 255, 0.16), transparent 55%),
               #f6f7fb;
   color: #111827;
 }
 
-/* Layout container */
+
 .appContainer {
   display: flex;
-  gap: 16px;              /* use gap instead of margins on children */
+  gap: 16px;            
   padding: 16px;
   min-height: 100vh;
   box-sizing: border-box;
-  align-items: flex-start; /* avoid stretching cards oddly */
+  align-items: flex-start;
 }
 
-/* Responsive: stack panels on mobile */
+
 @media (max-width: 700px) {
   .appContainer {
     flex-direction: column;
   }
 }
 
-/* Shared panel/card base */
+
 .panel {
   flex: 1;
   border-radius: 16px;
@@ -47,9 +39,8 @@ body {
   backdrop-filter: blur(6px);
 }
 
-/* Optional: give each side a subtle accent glow */
+
 .todoLeftSide {
-  composes: panel;
   box-shadow:
     0 10px 30px rgba(17, 24, 39, 0.10),
     0 0 0 1px rgba(90, 218, 255, 0.10),
@@ -57,21 +48,18 @@ body {
 }
 
 .todoRightSide {
-  composes: panel;
   box-shadow:
     0 10px 30px rgba(17, 24, 39, 0.10),
     0 0 0 1px rgba(84, 104, 255, 0.10),
     0 12px 60px rgba(84, 104, 255, 0.10);
 }
 
-/* If you don't want to use `composes`, you can just apply `.panel` class in JSX
-   AND remove leftSide/rightSide wrappers entirely. These keep compatibility. */
+
 .leftSide,
 .rightSide {
   flex: 1;
 }
 
-/* Headings: consistent */
 .leftSide h1,
 .rightSide h1 {
   margin: 10px 0 12px;
@@ -79,7 +67,6 @@ body {
   letter-spacing: -0.02em;
 }
 
-/* Labels/selects: make controls look consistent and modern */
 .leftSide label,
 .rightSide label {
   font-size: 13px;
@@ -106,14 +93,12 @@ body {
   box-shadow: 0 0 0 4px rgba(84, 104, 255, 0.12);
 }
 
-/* Load More button: keep your style, just slightly more consistent */
 .loadMoreButton {
   appearance: none;
   border: 0;
   border-radius: 12px;
   height: 46px;
 
-  /* keep your gradient theme */
   background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%);
 
   color: #fff;

@@ -4,8 +4,7 @@ import { TodoItem } from '../../components/TodoItem/TodoItem'
 import { useState } from 'react'
 import type { User } from '../../types/User' 
 
-export function LeftSide(props: {todoList: Todo[], toggleTodo, userList: User[] }) {
-    const [leftFilter, setLeftFilter] = useState<string>("all")
+export function LeftSide(props: {todoList: Todo[], toggleTodo, userList: User[] , leftFilter,setLeftFilter}) {
     const [leftSort,setLeftSort] = useState<string>("asc")
     const [shownCount,setShownCount] = useState<number>(10)
     let visibleTodos : Todo[] = props.todoList
@@ -20,9 +19,6 @@ export function LeftSide(props: {todoList: Todo[], toggleTodo, userList: User[] 
     const options = []
     for(let user of props.userList) {
         options.push(<option value={user.id.toString()}>{user.username}</option>)
-    }
-    if(leftFilter != "all") {
-        visibleTodos = visibleTodos.filter(todo => todo.userId.toString() === leftFilter)
     }
     if(leftSort == "asc") {
         visibleTodos = [...visibleTodos].sort((t1,t2) => t1.title.localeCompare(t2.title))
@@ -41,7 +37,7 @@ export function LeftSide(props: {todoList: Todo[], toggleTodo, userList: User[] 
         <div className={styles.leftSide}>
             <div>
             <label>Filter by: </label>
-            <select value={leftFilter} onChange={e => setLeftFilter(e.target.value)}>
+            <select value={props.leftFilter} onChange={e => props.setLeftFilter(e.target.value)}>
                 <option value={"all"}>All</option>
                 {options}
 

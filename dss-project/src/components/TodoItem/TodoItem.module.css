@@ -1,6 +1,4 @@
-/* TodoItem.module.css
-   Goal: match the soft-card theme + keep your button style
-*/
+
 
 .todoItem {
   display: flex;
@@ -25,18 +23,16 @@
   border-color: rgba(84, 104, 255, 0.22);
 }
 
-/* Title block (wrap long titles nicely) */
 .todoTitle {
   flex: 1;
   min-width: 0;
   font-size: 14px;
   font-weight: 700;
   color: #111827;
-  overflow-wrap: anywhere; /* prevents overflow from long words */
+  overflow-wrap: anywhere; 
   line-height: 1.25;
 }
 
-/* Optional metadata like username/date */
 .todoMeta {
   font-size: 12px;
   color: rgba(17, 24, 39, 0.55);
@@ -44,7 +40,6 @@
   font-weight: 600;
 }
 
-/* Your existing button style, slightly harmonized */
 .todoButton {
   background: linear-gradient(180deg, #5e5df0 0%, #4b4ae6 100%);
   border-radius: 999px;
@@ -82,7 +77,6 @@
     rgba(94, 93, 240, 0.35) 0 10px 18px -12px;
 }
 
-/* If you want a "completed" look, add a class in JSX like className={completed ? styles.completed : ""} */
 .completed .todoTitle {
   color: rgba(17, 24, 39, 0.55);
   text-decoration: line-through;

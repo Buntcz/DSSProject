@@ -5,12 +5,19 @@ import { TodoItem } from '../TodoItem/TodoItem'
 
 export function RightSide(props: {todoList: Todo[], toggleTodo} ) {
     const [rightSort,setRightSort] = useState<string>("asc")
+    const [showCount, setShowCount] = useState<number>(10)
     let visibleTodos : Todo[] = props.todoList
 
     if(rightSort === "asc") {
         visibleTodos = [...visibleTodos].sort((t1,t2) => t1.completedAt.localeCompare(t2.completedAt))
     } else if(rightSort === "desc") {
         visibleTodos = [...visibleTodos].sort((t1,t2) => t2.completedAt.localeCompare(t1.completedAt))
+    }
+
+    let pagedTodos = visibleTodos.slice(0,showCount)
+
+    const handlePagiation = () => {
+        setShowCount(prev => prev + 10)
     }
 
     return(<div className={styles.rightSide}>
@@ -23,7 +30,9 @@ export function RightSide(props: {todoList: Todo[], toggleTodo} ) {
         </div>
         <div className={styles.todoRightSide}>
         <h1>Completed: </h1>
-            {visibleTodos.map(todo => <TodoItem todo={todo} toggleTodo={props.toggleTodo}/>)}
+            {pagedTodos.map(todo => <TodoItem todo={todo} toggleTodo={props.toggleTodo}/>)}
+
+            {showCount < visibleTodos.length && <button className={styles.loadMoreButton} onClick={() => handlePagiation()}>Load More</button>}
         </div>
     </div>)
 }

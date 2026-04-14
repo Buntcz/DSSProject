@@ -8,6 +8,7 @@ import type { User } from './types/User'
 function App() {
   const [todos,setTodos] = useState<Todo[]>([])
   const [users, setUsers] = useState<User[]>([])
+  const [leftFilter, setLeftFilter] = useState<string>("all")
   async function fetchTodos() {
     try {
     const response = await fetch("http://jsonplaceholder.typicode.com/todos")
@@ -35,7 +36,7 @@ async function fetchUsers() {
     fetchTodos();
     fetchUsers();
   }, []);
-
+  
   const toggleComplete = (todoId: number) => {
     const flippedArray = todos.map((todo) => {
       if (todo.id === todoId) {
@@ -55,11 +56,16 @@ async function fetchUsers() {
     })
     setTodos(flippedArray)
   }
-  const completedTodos : Todo[] = todos.filter(todo => todo.completed == true)
-  const uncompletedTodos : Todo[]  = todos.filter(todo => todo.completed == false)
+
+  let visibleTodos = todos
+  if(leftFilter != "all") {
+    visibleTodos = visibleTodos.filter(todo => todo.userId.toString() == leftFilter)
+  }
+  const completedTodos : Todo[] = visibleTodos.filter(todo => todo.completed == true)
+  const uncompletedTodos : Todo[]  = visibleTodos.filter(todo => todo.completed == false)
   
   return (<div className={styles.appContainer}>
-    <LeftSide todoList={uncompletedTodos} toggleTodo={toggleComplete} userList={users}/>
+    <LeftSide todoList={uncompletedTodos} toggleTodo={toggleComplete} userList={users} leftFilter={leftFilter} setLeftFilter={setLeftFilter}/>
     <RightSide todoList={completedTodos} toggleTodo={toggleComplete}/>
   </div>)
 }
