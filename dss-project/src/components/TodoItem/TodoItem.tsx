@@ -7,9 +7,9 @@ export function TodoItem(props: {todo: Todo, toggleTodo}) {
 
     return (
         <div className={styles.todoItem}>
-            <p>{ props.todo.title }</p>
+            <p className={styles.todoTitle} >{ props.todo.title }</p>
             <button className={styles.todoButton} onClick={() => props.toggleTodo(props.todo.id)}> {buttonText} </button>
-            {props.todo.completed && <p>Completed on: {props.todo.completedAt}</p>}
+            {props.todo.completed && <p className={styles.todoMeta}>Completed on: {props.todo.completedAt}</p>}
         </div>
     )
 }

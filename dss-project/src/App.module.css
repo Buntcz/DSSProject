@@ -1,92 +1,155 @@
+/* App.module.css
+   Theme direction: soft cards + blue/purple accent buttons
+   Goal: consistent spacing, nicer background, better panel styling, responsive layout
+*/
+
+/* If this is truly a CSS MODULE, "body" won't apply globally.
+   Put global styles like body background in index.css (recommended).
+   But keeping it here for reference. */
 body {
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
+  /* subtle background that matches your #5adaff -> #5468ff vibe */
+  background: radial-gradient(1200px 600px at 10% 0%, rgba(90, 218, 255, 0.18), transparent 60%),
+              radial-gradient(1000px 600px at 90% 20%, rgba(84, 104, 255, 0.16), transparent 55%),
+              #f6f7fb;
+  color: #111827;
 }
 
+/* Layout container */
 .appContainer {
   display: flex;
+  gap: 16px;              /* use gap instead of margins on children */
+  padding: 16px;
   min-height: 100vh;
+  box-sizing: border-box;
+  align-items: flex-start; /* avoid stretching cards oddly */
 }
 
-.leftSide {
-    flex: 1;
-    margin:10px;
-    padding: 10px;
+/* Responsive: stack panels on mobile */
+@media (max-width: 700px) {
+  .appContainer {
+    flex-direction: column;
+  }
 }
 
+/* Shared panel/card base */
+.panel {
+  flex: 1;
+  border-radius: 16px;
+  padding: 16px;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  box-shadow:
+    0 10px 30px rgba(17, 24, 39, 0.10),
+    0 1px 0 rgba(255, 255, 255, 0.7) inset;
+  backdrop-filter: blur(6px);
+}
+
+/* Optional: give each side a subtle accent glow */
 .todoLeftSide {
-    border-radius: 14px;
-    border: 1px solid rgba(0,0,0,0.08);
-    background: rgba(255,255,255,0.85);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.10);
-    margin:10px;
-    padding: 10px;
+  composes: panel;
+  box-shadow:
+    0 10px 30px rgba(17, 24, 39, 0.10),
+    0 0 0 1px rgba(90, 218, 255, 0.10),
+    0 12px 60px rgba(90, 218, 255, 0.10);
 }
 
 .todoRightSide {
-    border-radius: 14px;
-    border: 1px solid rgba(0,0,0,0.08);
-    background: rgba(255,255,255,0.85);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.10);
-    margin: 10px;
-    padding: 10px;
+  composes: panel;
+  box-shadow:
+    0 10px 30px rgba(17, 24, 39, 0.10),
+    0 0 0 1px rgba(84, 104, 255, 0.10),
+    0 12px 60px rgba(84, 104, 255, 0.10);
 }
 
-.rightSide{
-    flex: 1;
-    margin:10px;
-    padding: 10px;
+/* If you don't want to use `composes`, you can just apply `.panel` class in JSX
+   AND remove leftSide/rightSide wrappers entirely. These keep compatibility. */
+.leftSide,
+.rightSide {
+  flex: 1;
 }
 
+/* Headings: consistent */
+.leftSide h1,
+.rightSide h1 {
+  margin: 10px 0 12px;
+  font-size: 20px;
+  letter-spacing: -0.02em;
+}
+
+/* Labels/selects: make controls look consistent and modern */
+.leftSide label,
+.rightSide label {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(17, 24, 39, 0.7);
+  margin-right: 8px;
+}
+
+.leftSide select,
+.rightSide select {
+  width: 100%;
+  margin: 6px 0 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(17, 24, 39, 0.12);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 1px 0 rgba(17, 24, 39, 0.04);
+  outline: none;
+}
+
+.leftSide select:focus,
+.rightSide select:focus {
+  border-color: rgba(84, 104, 255, 0.45);
+  box-shadow: 0 0 0 4px rgba(84, 104, 255, 0.12);
+}
+
+/* Load More button: keep your style, just slightly more consistent */
 .loadMoreButton {
-
-  align-items: center;
   appearance: none;
-  background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%);
   border: 0;
-  border-radius: 6px;
-  box-shadow: rgba(45, 35, 66, .4) 0 2px 4px,rgba(45, 35, 66, .3) 0 7px 13px -3px,rgba(58, 65, 111, .5) 0 -3px 0 inset;
-  box-sizing: border-box;
+  border-radius: 12px;
+  height: 46px;
+
+  /* keep your gradient theme */
+  background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%);
+
   color: #fff;
   cursor: pointer;
-  display: inline-flex;
-  font-family: "JetBrains Mono",monospace;
-  height: 48px;
-  justify-content: center;
-  line-height: 1;
-  list-style: none;
-  overflow: hidden;
-  padding-left: 16px;
-  padding-right: 16px;
-  position: relative;
-  text-align: left;
-  text-decoration: none;
-  transition: box-shadow .15s,transform .15s;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  white-space: nowrap;
-  will-change: box-shadow,transform;
-  font-size: 18px;
+
   display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 12px;  
+  margin: 14px auto 0;
+  padding: 0 16px;
 
-}
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 16px;
+  font-weight: 700;
 
-.loadMoreButton:focus {
-  box-shadow: #3c4fe0 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+  box-shadow:
+    rgba(45, 35, 66, 0.35) 0 10px 20px -12px,
+    rgba(58, 65, 111, 0.35) 0 -3px 0 inset;
+
+  transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
 }
 
 .loadMoreButton:hover {
-  box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
   transform: translateY(-2px);
+  filter: brightness(1.02);
+  box-shadow:
+    rgba(45, 35, 66, 0.45) 0 16px 30px -18px,
+    rgba(58, 65, 111, 0.40) 0 -3px 0 inset;
 }
 
 .loadMoreButton:active {
-  box-shadow: #3c4fe0 0 3px 7px inset;
-  transform: translateY(2px);
+  transform: translateY(1px);
+}
+
+.loadMoreButton:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 4px rgba(90, 218, 255, 0.22),
+    rgba(45, 35, 66, 0.35) 0 10px 20px -12px,
+    rgba(58, 65, 111, 0.35) 0 -3px 0 inset;
 }
