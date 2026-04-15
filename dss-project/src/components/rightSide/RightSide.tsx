@@ -30,7 +30,7 @@ export function RightSide(props: {todoList: Todo[], toggleTodo} ) {
         </div>
         <div className={styles.todoRightSide}>
         <h1>Completed: </h1>
-            {pagedTodos.map(todo => <TodoItem todo={todo} toggleTodo={props.toggleTodo}/>)}
+            {pagedTodos.map(todo => <TodoItem key={todo.id} todo={todo} toggleTodo={props.toggleTodo}/>)}
 
             {showCount < visibleTodos.length && <button className={styles.loadMoreButton} onClick={() => handlePagiation()}>Load More</button>}
         </div>
