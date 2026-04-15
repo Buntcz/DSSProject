@@ -41,7 +41,7 @@ async function fetchUsers() {
     const flippedArray = todos.map((todo) => {
       if (todo.id === todoId) {
       const willBeComp = !todo.completed
-      const completedOn = willBeComp ? new Date().toISOString().slice(0,10) : ""
+      const completedOn = willBeComp ? new Date().toISOString() : ""
       const newTodo : Todo = {
         id: todo.id,
         userId: todo.userId,
